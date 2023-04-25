@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>products_list</title>
+</head>
+<body>
+    <section class="header">
+        <h3 class="title">
+            Our Products
+        <div class="title-line-bar"></div>
+        </h3>
+    </section>
+
+    <section class="body"></section>
+    <!-- logic -->
+   <script>
+    function app() {
+        const url = 'https://course-api.com/javascript-store-products'
+        const listProduct = document.querySelector('.body')
+
+        const fetchData = async () => {
+            const data = await fetch(url)
+            const list = await data.json()
+            return list
+        }
+        // console.log(fetchData(url))
+
+       const render = (list) => {
+          const htmls = list.map((product,index) => {
+            const { id } = product
+            const { name, price } = product.fields
+            const { url } =  product.fields.image[0]
+
+            return `
+                <div class="product">
+                    <a href="./product/product.html">
+                        <img src="${url}" alt="img-${index}" class="product__img">
+                        <p class="product__title">${name}</p>
+                        <p class="product__price">$${price}</p>
+                    </a>
+                </div>
+            `
+          }).join('')
+
+          listProduct.innerHTML = htmls
+          console.log(htmls)
+       }
+
+       const start = async() =>{
+         const data = await fetchData()
+         render(data)
+       }
+       
+       start()
+    } 
+
+    app()
+   </script>
+</body>
+</html>
