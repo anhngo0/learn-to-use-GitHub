@@ -18,8 +18,8 @@
          const url = 'https://course-api.com/javascript-store-products'
          const product = document.querySelector('.product')
 
-         const data = window.location.search
-         console.log(data)
+         const params = new URLSearchParams(window.location.search)
+         console.log(params.get(id))
     </script>
 </body>
 </html>
